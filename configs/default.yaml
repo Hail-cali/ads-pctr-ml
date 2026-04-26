@@ -18,12 +18,12 @@ model:
   cross_rank: 32
 
 train:
-  epochs: 10
+  epochs: 3
   lr: 0.001
   weight_decay: 0.00001
   max_grad_norm: 5.0
   use_amp: true
-  patience: 3
+  patience: 2
   T_0: 5
   checkpoint_dir: "checkpoints"
 
