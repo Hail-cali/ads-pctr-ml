@@ -1,0 +1,49 @@
+data:
+  filepath: "data/raw/train.txt"
+  hash_bucket_size: 100000
+  batch_size: 4096
+  val_ratio: 0.1
+  test_ratio: 0.1
+  num_workers: 4
+  seed: 42
+
+model:
+  name: "deepfm"
+  num_dense: 13
+  num_sparse_fields: 26
+  embed_dim: 16
+  hidden_dims: [256, 128, 64]
+  dropout: 0.2
+  cross_layers: 3
+  cross_rank: 32
+
+train:
+  epochs: 10
+  lr: 0.001
+  weight_decay: 0.00001
+  max_grad_norm: 5.0
+  use_amp: true
+  patience: 3
+  T_0: 5
+  checkpoint_dir: "checkpoints"
+
+serving:
+  onnx_path: "checkpoints/model.onnx"
+  host: "0.0.0.0"
+  port: 8000
+  max_batch_size: 256
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+
+kafka:
+  bootstrap_servers: "localhost:9092"
+  impression_topic: "ad-impressions"
+  click_topic: "ad-clicks"
+  conversion_topic: "ad-conversions"
+
+mlflow:
+  tracking_uri: "http://localhost:5001"
+  experiment_name: "ctr-prediction"
